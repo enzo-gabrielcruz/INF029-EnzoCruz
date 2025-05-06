@@ -11,10 +11,10 @@
 //  O aluno deve preencher seus dados abaixo, e implementar as questões do trabalho
 
 //  ----- Dados do Aluno -----
-//  Nome:
+//  Nome: ENZO GABRIEL CALADO DA CRUZ
 //  email:
-//  Matrícula:
-//  Semestre:
+//  Matrícula: 20242160020
+//  Semestre: 2º
 
 //  Copyright © 2016 Renato Novais. All rights reserved.
 // Última atualização: 07/05/2021 - 19/08/2016
@@ -96,6 +96,13 @@ int q1(char data[])
 
   //quebrar a string data em strings sDia, sMes, sAno
 
+for(int i = 0; data[i] < '\0';i++){
+  coletor = data[i] //o que farei: coletor vai receber os numeros que estão antes do barra, como se fosse um token, guarda esse valor, converte o valor e transforma ele em variável dia, mes ou ano
+  if(data[i] == '/')
+  {
+
+  }
+}
 
   //printf("%s\n", data);
 
