@@ -24,6 +24,7 @@
 #include <stdio.h>
 #include "EnzoCruz20242160020.h" // Substitua pelo seu arquivo de header renomeado
 #include <stdlib.h>
+#include <string.h>
 
 DataQuebrada quebraData(char data[]);
 
@@ -93,24 +94,42 @@ int teste(int a)
 int q1(char data[])
 {
   int datavalida = 1;
+  int maxDias;
+  DataQuebrada dq = quebraData(data);
 
-  //quebrar a string data em strings sDia, sMes, sAno
-
-for(int i = 0; data[i] < '\0';i++){
-  coletor = data[i] //o que farei: coletor vai receber os numeros que estão antes do barra, como se fosse um token, guarda esse valor, converte o valor e transforma ele em variável dia, mes ou ano
-  if(data[i] == '/')
-  {
-
+  if (dq.valido == 0){
+    return 0;
   }
+
+  if (dq.iMes < 1 || dq.iMes > 12){
+    return 0;
+  }
+
+  switch (dq.iMes){
+    case 1: case 3: case 5: case 7: case 8: case 10: case 12:  maxDias = 31;break;
+    case 4: case 6: case 9: case 11: maxDias = 30; break;
+    case 2: 
+      if((dq.iAno % 4 == 0 && dq.iAno % 100 != 0) || (dq.iAno % 400 == 0))
+      {
+        maxDias = 29;
+      }
+      else{
+        maxDias = 28;
+      }
+      break;
+      
+    default:
+    return 0;
+  }
+
+  if (dq.iDia > maxDias || dq.iDia < 1){
+    return 0;
+  }
+
+return 1;
+
 }
 
-  //printf("%s\n", data);
-
-  if (datavalida)
-      return 1;
-  else
-      return 0;
-}
 
 
 
@@ -248,7 +267,7 @@ DataQuebrada quebraData(char data[]){
   char sDia[3];
 	char sMes[3];
 	char sAno[5];
-	int i; 
+	int i,key,verificador_int; 
 
 	for (i = 0; data[i] != '/'; i++){
 		sDia[i] = data[i];	
@@ -292,11 +311,51 @@ DataQuebrada quebraData(char data[]){
     return dq;
   }
 
-  dq.iDia = atoi(sDia);
-  dq.iMes = atoi(sMes);
-  dq.iAno = atoi(sAno); 
+ key = 1;
+    for (i = 0; sDia[i] != '\0'; i++) {
+        if (sDia[i] < '0' || sDia[i] > '9') key = 0;
+    }
+    if (!key) return dq;
+    dq.iDia = atoi(sDia);
 
-	dq.valido = 1;
-    
+ key = 1;
+    for (i = 0; sMes[i] != '\0'; i++) {
+        if (sMes[i] < '0' || sMes[i] > '9') key = 0;
+    }
+    if (!key) return dq;
+    dq.iMes = atoi(sMes);
+
+  key = 1;
+    for (i = 0; sAno[i] != '\0'; i++) {
+        if (sAno[i] < '0' || sAno[i] > '9') key = 0;
+    }
+  if (!key) return dq;
+  dq.iAno = atoi(sAno);
+  dq.valido = 1;
   return dq;
+}
+
+void testQ1()
+{
+    char str[11];
+    strcpy(str, "29/02/2015");
+    printf("%d\n", q1(str) == 0);
+    strcpy(str, "29/02/2012");
+    printf("%d\n", q1(str) == 1);
+    strcpy(str, "9/13/2014");
+    printf("%d\n", q1(str) == 0);
+    strcpy(str, "45/4/2014");
+    printf("%d\n", q1(str) == 0);
+    strcpy(str, "/9/2014");
+    printf("%d\n", q1(str) == 0);
+    strcpy(str, "1a/9/2014");
+    printf("%d\n", q1(str) == 0);
+}
+
+int main(){
+printf("QUESTÃO 1:\n");
+testQ1();
+printf("\n\nQUESTÃO 2:\n");
+return 0;
+
 }
