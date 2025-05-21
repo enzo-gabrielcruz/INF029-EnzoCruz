@@ -152,6 +152,8 @@ DiasMesesAnos q2(char datainicial[], char datafinal[])
 
     //calcule os dados e armazene nas três variáveis a seguir
     DiasMesesAnos dma;
+    DataQuebrada dq_Inicial = quebraData(datainicial)
+    DataQuebrada dq_Final = quebraData(datafinal);
 
     if (q1(datainicial) == 0){
       dma.retorno = 2;
@@ -161,9 +163,30 @@ DiasMesesAnos q2(char datainicial[], char datafinal[])
       return dma;
     }else{
       //verifique se a data final não é menor que a data inicial
-      
-      //calcule a distancia entre as datas
+      if(dq_Final.ano < dq_Inicial.ano)
+      {
+        dma.retorno = 4;
+        return dma;
+      }
 
+      if(dq_Final.ano >= dq_Inicial.ano)
+      {
+          if(dq_Final.mes < dq_Inicial.mes){
+            dma.retorno = 4;
+            return dma;
+          }
+          else(dq_Final.mes >= dq_Inicial.mes){
+            if(dq_Final.dia < dq_Inicial.dia){
+              dma.retorno = 4;
+              return dma;
+            }
+          }
+      }
+
+      //calcule a distancia entre as datas
+      dma.qtdAnos = dq_Final.ano - dq_Inicial.ano;
+      dma.qtdMeses = dq_Final.mes - dq_Inicial.mes;
+      dma.qtdDias = dq_Final.dia - dq_Inicial.dia;
 
       //se tudo der certo
       dma.retorno = 1;
