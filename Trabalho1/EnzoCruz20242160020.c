@@ -201,19 +201,7 @@ DiasMesesAnos q2(char datainicial[], char datafinal[])
         return dma;
       }
 
-      if(dq_Final.iAno >= dq_Inicial.iAno)
-      {
-          if(dq_Final.iMes < dq_Inicial.iMes){
-            dma.retorno = 4;
-            return dma;
-          }
-          else if(dq_Final.iMes >= dq_Inicial.iMes){
-            if(dq_Final.iDia < dq_Inicial.iDia){
-              dma.retorno = 4;
-              return dma;
-            }
-          }
-      }
+
     }
 
       //calcule a distancia entre as datas
@@ -240,57 +228,31 @@ DiasMesesAnos q2(char datainicial[], char datafinal[])
       
     }
 
-    void testQ2()
-{
-    char datainicial[11], datafinal[11];
-    int qtdDias, qtdMeses, qtdAnos;
-    DiasMesesAnos dma;
+   void calculaEImprimeDiferenca() {
+    // Datas fixas
+    char datainicial[] = "12/11/2002";
+    char datafinal[] = "22/05/2025";
 
-    //teste 1
-    qtdDias = -1;
-    qtdMeses = -1;
-    qtdAnos = -1;
+    DiasMesesAnos resultado = q2(datainicial, datafinal);
 
-    strcpy(datainicial, "01/06/2015");
-    strcpy(datafinal, "01/06/2016");
-    dma = q2(datainicial, datafinal);
-    printf("%d\n", dma.retorno == 1);
-    printf("%d\n", dma.qtdDias == 0);
-    printf("%d\n", dma.qtdMeses == 0);
-    printf("%d\n", dma.qtdAnos == 1);
-
-    //teste 2 - retornos
-    qtdDias = -1;
-    qtdMeses = -1;
-    qtdAnos = -1;
-
-    strcpy(datainicial, "01/30/2015");
-    strcpy(datafinal, "01/06/2016");
-    dma = q2(datainicial, datafinal);
-    printf("%d\n", dma.retorno == 2);
-
-    strcpy(datainicial, "01/3/2015");
-    strcpy(datafinal, "40/06/2016");
-    dma = q2(datainicial, datafinal);
-    printf("%d\n", dma.retorno == 3);
-
-    strcpy(datainicial, "01/06/2016");
-    strcpy(datafinal, "01/06/2015");
-    dma = q2(datainicial, datafinal);
-    printf("%d\n", dma.retorno == 4);
-
-    //teste 3
-    qtdDias = -1;
-    qtdMeses = -1;
-    qtdAnos = -1;
-
-    strcpy(datainicial, "06/06/2017");
-    strcpy(datafinal, "07/07/2017");
-    dma = q2(datainicial, datafinal);
-    printf("%d\n", dma.retorno == 1);
-    printf("%d\n", dma.qtdDias == 1);
-    printf("%d\n", dma.qtdMeses == 1);
-    printf("%d\n", dma.qtdAnos == 0);
+    switch (resultado.retorno) {
+        case 1:
+            printf("Diferença: %d ano(s), %d mes(es), %d dia(s)\n",
+                   resultado.qtdAnos, resultado.qtdMeses, resultado.qtdDias);
+            break;
+        case 2:
+            printf("Data inicial inválida.\n");
+            break;
+        case 3:
+            printf("Data final inválida.\n");
+            break;
+        case 4:
+            printf("Data final é menor que a data inicial.\n");
+            break;
+        default:
+            printf("Erro desconhecido ao calcular diferença entre as datas.\n");
+            break;
+    }
 }
     
 
@@ -461,7 +423,7 @@ int main(){
 printf("QUESTÃO 1:\n");
 testQ1();
 printf("\n\nQUESTÃO 2:\n");
-testQ2();
+calculaEImprimeDiferenca();
 return 0;
 
 }
