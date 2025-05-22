@@ -129,7 +129,22 @@ int q1(char data[])
 return 1;
 
 }
-
+void testQ1()
+{
+    char str[11];
+    strcpy(str, "29/02/2015");
+    printf("%d\n", q1(str) == 0);
+    strcpy(str, "29/02/2012");
+    printf("%d\n", q1(str) == 1);
+    strcpy(str, "9/13/2014");
+    printf("%d\n", q1(str) == 0);
+    strcpy(str, "45/4/2014");
+    printf("%d\n", q1(str) == 0);
+    strcpy(str, "/9/2014");
+    printf("%d\n", q1(str) == 0);
+    strcpy(str, "1a/9/2014");
+    printf("%d\n", q1(str) == 0);
+}
 
 
 
@@ -152,8 +167,25 @@ DiasMesesAnos q2(char datainicial[], char datafinal[])
 
     //calcule os dados e armazene nas três variáveis a seguir
     DiasMesesAnos dma;
-    DataQuebrada dq_Inicial = quebraData(datainicial)
+    DataQuebrada dq_Inicial = quebraData(datainicial);
     DataQuebrada dq_Final = quebraData(datafinal);
+    int maxDias_inicio;
+
+    switch (dq_Inicial.iMes){
+    case 1: case 3: case 5: case 7: case 8: case 10: case 12:  maxDias_inicio = 31;break;
+    case 4: case 6: case 9: case 11: maxDias_inicio = 30; break;
+    case 2: 
+      if((dq_Final.iAno % 4 == 0 && dq_Final.iAno % 100 != 0) || (dq_Final.iAno % 400 == 0))
+      {
+        maxDias_inicio = 29;
+      }
+      else{
+        maxDias_inicio = 28;
+      }
+      break;
+    default:
+    break;
+  }
 
     if (q1(datainicial) == 0){
       dma.retorno = 2;
@@ -163,38 +195,104 @@ DiasMesesAnos q2(char datainicial[], char datafinal[])
       return dma;
     }else{
       //verifique se a data final não é menor que a data inicial
-      if(dq_Final.ano < dq_Inicial.ano)
+      if(dq_Final.iAno < dq_Inicial.iAno)
       {
         dma.retorno = 4;
         return dma;
       }
 
-      if(dq_Final.ano >= dq_Inicial.ano)
+      if(dq_Final.iAno >= dq_Inicial.iAno)
       {
-          if(dq_Final.mes < dq_Inicial.mes){
+          if(dq_Final.iMes < dq_Inicial.iMes){
             dma.retorno = 4;
             return dma;
           }
-          else(dq_Final.mes >= dq_Inicial.mes){
-            if(dq_Final.dia < dq_Inicial.dia){
+          else if(dq_Final.iMes >= dq_Inicial.iMes){
+            if(dq_Final.iDia < dq_Inicial.iDia){
               dma.retorno = 4;
               return dma;
             }
           }
       }
+    }
 
       //calcule a distancia entre as datas
-      dma.qtdAnos = dq_Final.ano - dq_Inicial.ano;
-      dma.qtdMeses = dq_Final.mes - dq_Inicial.mes;
-      dma.qtdDias = dq_Final.dia - dq_Inicial.dia;
+      dma.qtdAnos = dq_Final.iAno - dq_Inicial.iAno;
+      dma.qtdMeses = dq_Final.iMes - dq_Inicial.iMes;
+      dma.qtdDias = dq_Final.iDia - dq_Inicial.iDia;
+      
+      // se o mes for positivo, consequentemente não será necessário decrementar ano.
+      // se dia, mes e ano for maior ou igual a zero, não é necessário realizar verificação
+      // se mes for negativo, necessário comparar com os dias para que possamos incrementar 
+
+      if (dma.qtdMeses < 0 ){
+        dma.qtdAnos--;
+        dma.qtdMeses = 12 + dma.qtdMeses;
+      }
+      if (dma.qtdDias < 0){
+        dma.qtdMeses--;
+        dma.qtdDias = dma.qtdDias + maxDias_inicio;
+      }
 
       //se tudo der certo
       dma.retorno = 1;
       return dma;
       
     }
-    
+
+    void testQ2()
+{
+    char datainicial[11], datafinal[11];
+    int qtdDias, qtdMeses, qtdAnos;
+    DiasMesesAnos dma;
+
+    //teste 1
+    qtdDias = -1;
+    qtdMeses = -1;
+    qtdAnos = -1;
+
+    strcpy(datainicial, "01/06/2015");
+    strcpy(datafinal, "01/06/2016");
+    dma = q2(datainicial, datafinal);
+    printf("%d\n", dma.retorno == 1);
+    printf("%d\n", dma.qtdDias == 0);
+    printf("%d\n", dma.qtdMeses == 0);
+    printf("%d\n", dma.qtdAnos == 1);
+
+    //teste 2 - retornos
+    qtdDias = -1;
+    qtdMeses = -1;
+    qtdAnos = -1;
+
+    strcpy(datainicial, "01/30/2015");
+    strcpy(datafinal, "01/06/2016");
+    dma = q2(datainicial, datafinal);
+    printf("%d\n", dma.retorno == 2);
+
+    strcpy(datainicial, "01/3/2015");
+    strcpy(datafinal, "40/06/2016");
+    dma = q2(datainicial, datafinal);
+    printf("%d\n", dma.retorno == 3);
+
+    strcpy(datainicial, "01/06/2016");
+    strcpy(datafinal, "01/06/2015");
+    dma = q2(datainicial, datafinal);
+    printf("%d\n", dma.retorno == 4);
+
+    //teste 3
+    qtdDias = -1;
+    qtdMeses = -1;
+    qtdAnos = -1;
+
+    strcpy(datainicial, "06/06/2017");
+    strcpy(datafinal, "07/07/2017");
+    dma = q2(datainicial, datafinal);
+    printf("%d\n", dma.retorno == 1);
+    printf("%d\n", dma.qtdDias == 1);
+    printf("%d\n", dma.qtdMeses == 1);
+    printf("%d\n", dma.qtdAnos == 0);
 }
+    
 
 /*
  Q3 = encontrar caracter em texto
@@ -358,27 +456,12 @@ DataQuebrada quebraData(char data[]){
   return dq;
 }
 
-void testQ1()
-{
-    char str[11];
-    strcpy(str, "29/02/2015");
-    printf("%d\n", q1(str) == 0);
-    strcpy(str, "29/02/2012");
-    printf("%d\n", q1(str) == 1);
-    strcpy(str, "9/13/2014");
-    printf("%d\n", q1(str) == 0);
-    strcpy(str, "45/4/2014");
-    printf("%d\n", q1(str) == 0);
-    strcpy(str, "/9/2014");
-    printf("%d\n", q1(str) == 0);
-    strcpy(str, "1a/9/2014");
-    printf("%d\n", q1(str) == 0);
-}
 
 int main(){
 printf("QUESTÃO 1:\n");
 testQ1();
 printf("\n\nQUESTÃO 2:\n");
+testQ2();
 return 0;
 
 }
