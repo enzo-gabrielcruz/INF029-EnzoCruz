@@ -268,10 +268,101 @@ DiasMesesAnos q2(char datainicial[], char datafinal[])
  */
 int q3(char *texto, char c, int isCaseSensitive)
 {
-    int qtdOcorrencias = -1;
+    int qtdOcorrencias = 0;
+    int i,j;
+    isCaseSensitive = 1;
+    // função para remover acentos de vogais
+    for(i = 0; texto[i] != '\0';i++){
+      if (texto[i] == -61){
+        // verificando se o acento está na vogal a;
+          if ((texto[i+1] <= -125 && texto[i+1] >= -127) || (texto[i+1] <= -93 && texto[i+1] >= -95)){
+            if(texto[i+1] <= -125 && texto[i+1] >= -127){
+              texto[i+1] = 'A';
+            }
+            else texto[i+1] = 'a';
+          }
+          //verificando se o acento está na vogal e;
+          if((texto[i+1] <= -118 && texto[i+1] >= -119) || (texto[i+1] <= -86 && texto[i+1] >= -87)){          
+            if(texto[i+1] <= -118 && texto[i+1] >= -119){
+              texto[i+1] = 'E';
+            }
+            else texto[i+1] = 'e';
+          }
+          // verificando se o acento está na vogal i;
+          if((texto[i+1] <= -114 && texto[i+1] >= -115) || (texto[i+1] <= -82 && texto[i+1] >= -83)){          
+            if(texto[i+1] <= -114 && texto[i+1] >= -115){
+              texto[i+1] = 'I';
+            }
+            else texto[i+1] = 'i';
+          }
+          //verificando se o acentto está na vogal o;
+          if((texto[i+1] <= -108 && texto[i+1] >= -109) || (texto[i+1] <= -76 && texto[i+1] >= -77)){          
+            if(texto[i+1] <= -108 && texto[i+1] >= -109){
+              texto[i+1] = 'O';
+            }
+            else texto[i+1] = 'o';
+          }
 
+          if((texto[i+1] <= -101 && texto[i+1] >= -102) || (texto[i+1] <= -69 && texto[i+1] >= -70)){          
+            if(texto[i+1] <= -101 && texto[i+1] >= -102){
+              texto[i+1] = 'U';
+            }
+            else texto[i+1] = 'u';
+          }
+      }
+    }
+    //retirando a posicao -61, referente ao identificador da vogal com acento
+    char aux;
+    for(i=0; texto[i] != '\0';i++){
+      if(texto[i] == -61){
+        for(int j = i; texto[j] != '\0';i++){
+          aux = texto[j];
+          texto[j] = texto[j+1];
+        }
+        texto[j-1] = '\0';
+      }
+    }
+
+
+    // definindo que se não for case sensitive o programa irá colocar todos os caracteres para maiúsculo
+    if(isCaseSensitive != 1){
+      for(i = 0; texto[i] != '\0'; i++)
+      {
+        if(texto[i] >= 97 && texto[i] <= 122)
+        {
+          texto[i] = texto[i] - 32;
+        }
+        else continue;
+      }
+      for(i=0; texto[i]!= '\0';i++){
+        if (texto[i]== c){
+          qtdOcorrencias = qtdOcorrencias + 1;
+        }
+      }
+    }
+
+    else{
+      for(i=0; texto[i]!= '\0';i++){
+        if (texto[i]== c){
+          qtdOcorrencias = qtdOcorrencias + 1;
+        }
+      }
+    }
     return qtdOcorrencias;
 }
+
+void testQ3()
+{
+    char str[250];
+    strcpy(str, "Renato Lima Novais");
+    printf("%d\n", q3(str, 'a', 0) == 3);
+    printf("%d\n", q3(str, 'b', 0) == 0);
+    printf("%d\n", q3(str, 'l', 1) == 0);
+    printf("%d\n", q3(str, 'l', 0) == 1);
+    printf("%d\n", q3(str, 'L', 0) == 1);
+}
+
+
 
 /*
  Q4 = encontrar palavra em texto
@@ -290,7 +381,7 @@ int q3(char *texto, char c, int isCaseSensitive)
  */
 int q4(char *strTexto, char *strBusca, int posicoes[30])
 {
-    int qtdOcorrencias = -1;
+    int qtdOcorrencias = 0;
 
     return qtdOcorrencias;
 }
@@ -307,9 +398,40 @@ int q4(char *strTexto, char *strBusca, int posicoes[30])
 
 int q5(int num)
 {
+    int Tamanho,multiplicador,PrimeiroNumero,NumSeparado[100],auxDivisao,total,i;
+    char convert_int[100];
+    // convertendo num para string para verificar quantidade de digitos
+    sprintf(convert_int, "%d", num);
+    Tamanho = strlen(convert_int);
 
-    return num;
+    multiplicador = 1;
+    for(int i=0; i<Tamanho-1;i++){
+      multiplicador = 10*multiplicador;
+    }
+    auxDivisao = num;
+    for (i=0; i< Tamanho;i++)
+    {
+      NumSeparado[i] = auxDivisao % 10; 
+      auxDivisao = auxDivisao / 10;
+    }
+    total = 0;
+    for(i=0; i< Tamanho;i++){
+      total = (NumSeparado[i]*multiplicador) + total;
+      multiplicador = multiplicador/10;
+    } 
+
+
+    return total;
 }
+
+void testQ5()
+{
+    printf("%d\n", q5(345) == 543);
+    printf("%d\n", q5(78) == 87);
+    printf("%d\n", q5(3) == 3);
+    printf("%d\n", q5(5430) == 345);
+}
+
 
 /*
  Q6 = ocorrência de um número em outro
@@ -424,6 +546,10 @@ printf("QUESTÃO 1:\n");
 testQ1();
 printf("\n\nQUESTÃO 2:\n");
 calculaEImprimeDiferenca();
+printf("\nQUESTÃO 3:\n");
+testQ3();
+printf("\nQUESTÃO 5:\n");
+testQ5();
 return 0;
 
 }
