@@ -446,6 +446,9 @@ void testQ5()
 int q6(int numerobase, int numerobusca)
 {
     int qtdOcorrencias;
+    // voce vai verificar o numero que voce quer verificar a repetição. A partir dai voce precisa identificar se o numero é unidade, dezena, centena, etc. e a partir dai começar a quebra do mumero principal dividindo o numero pelo vaor unitário do numero que voce quer verificar repetição, e pegar o percent da divisão
+
+    
     return qtdOcorrencias;
 }
 
