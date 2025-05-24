@@ -472,6 +472,7 @@ int q6(int numerobase, int numerobusca)
 
 }
 
+
 /*
  Q7 = jogo busca palavras
  @objetivo
@@ -564,6 +565,15 @@ DataQuebrada quebraData(char data[]){
 }
 
 
+void testQ6()
+{
+    printf("%d\n", q6(34567368, 3) == 2);
+    printf("%d\n", q6(34567368, 4576) == 0);
+    printf("%d\n", q6(3539343, 3) == 4);
+    printf("%d\n", q6(3539343, 39) == 1);
+}
+
+
 int main(){
 printf("QUESTÃO 1:\n");
 testQ1();
@@ -573,6 +583,11 @@ printf("\nQUESTÃO 3:\n");
 testQ3();
 printf("\nQUESTÃO 5:\n");
 testQ5();
+printf("\nQUESTÃO 6:\n");
+testQ6();
+
 return 0;
 
 }
+
+
