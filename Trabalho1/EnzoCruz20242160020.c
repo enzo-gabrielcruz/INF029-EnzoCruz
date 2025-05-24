@@ -445,11 +445,31 @@ void testQ5()
 
 int q6(int numerobase, int numerobusca)
 {
-    int qtdOcorrencias;
+    int qtdOcorrencias = 0;
+    int Tam_Busca,i,divisor,numero_decrementado;
+    int multiplicador = 1;
+    char convert_int[200];
+
+    sprintf(convert_int, "%d", numerobusca);
+    Tam_Busca = strlen(convert_int);
+
+    for(i=0; i < Tam_Busca; i++){
+      // coleta o tamanho do numero buscado para que assim, possa ser quebrado o numero base corretamente
+      multiplicador = multiplicador * 10;
+    }
+   
+    while (divisor%multiplicador != 0)
+    {
+      divisor = numero_decrementado%multiplicador;
+      numero_decrementado = numero_decrementado/multiplicador;
+
+      if(divisor == numerobusca){
+        qtdOcorrencias++;
+      }
+    }
+    return qtdOcorrencias;
     // voce vai verificar o numero que voce quer verificar a repetição. A partir dai voce precisa identificar se o numero é unidade, dezena, centena, etc. e a partir dai começar a quebra do mumero principal dividindo o numero pelo vaor unitário do numero que voce quer verificar repetição, e pegar o percent da divisão
 
-    
-    return qtdOcorrencias;
 }
 
 /*
