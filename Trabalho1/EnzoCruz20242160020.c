@@ -446,22 +446,36 @@ void testQ5()
 int q6(int numerobase, int numerobusca)
 {
     int qtdOcorrencias = 0;
-    int Tam_Busca,i,divisor,numero_decrementado;
-    int multiplicador = 1;
+    int Tam_Busca,Tam_numero,i,divisor,numero_decrementado;
+    int multiplicador_busca = 1;
+    int multiplicador_numero = 1;
     char convert_int[200];
 
     sprintf(convert_int, "%d", numerobusca);
     Tam_Busca = strlen(convert_int);
 
+    sprintf(convert_int, "%d", numerobase);
+    Tam_numero = strlen(convert_int);
+
     for(i=0; i < Tam_Busca; i++){
       // coleta o tamanho do numero buscado para que assim, possa ser quebrado o numero base corretamente
-      multiplicador = multiplicador * 10;
+      multiplicador_busca = multiplicador_busca * 10;
     }
-   
-    while (divisor%multiplicador != 0)
+
+    for(i=0; i < Tam_numero; i++){
+    // coleta o tamanho do numero buscado para que assim, possa ser quebrado o numero base corretamente
+    multiplicador_numero = multiplicador_numero * 10;
+    }
+    multiplicador_numero = multiplicador_numero/multiplicador_busca;
+
+
+
+   numero_decrementado = numerobase;
+    while (numero_decrementado != 0)
     {
-      divisor = numero_decrementado%multiplicador;
-      numero_decrementado = numero_decrementado/multiplicador;
+      divisor = numero_decrementado/multiplicador_numero;
+      numero_decrementado = numero_decrementado%multiplicador_numero;
+      multiplicador_numero = multiplicador_numero/multiplicador_busca;
 
       if(divisor == numerobusca){
         qtdOcorrencias++;
