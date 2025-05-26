@@ -270,7 +270,7 @@ int q3(char *texto, char c, int isCaseSensitive)
 {
     int qtdOcorrencias = 0;
     int i,j;
-    isCaseSensitive = 1;
+
     // função para remover acentos de vogais
     for(i = 0; texto[i] != '\0';i++){
       if (texto[i] == -61){
@@ -315,7 +315,7 @@ int q3(char *texto, char c, int isCaseSensitive)
     char aux;
     for(i=0; texto[i] != '\0';i++){
       if(texto[i] == -61){
-        for(int j = i; texto[j] != '\0';i++){
+        for(int j = i; texto[j] != '\0';j++){
           aux = texto[j];
           texto[j] = texto[j+1];
         }
@@ -382,8 +382,101 @@ void testQ3()
 int q4(char *strTexto, char *strBusca, int posicoes[30])
 {
     int qtdOcorrencias = 0;
+    int Tam_Busca,Tam_Texto,i,j,k;
+    int Verificador_Acento = 0;
+    int encontrou,posicao;
+    char aux;
 
+        
+    Tam_Busca = strlen(strBusca);
+    Tam_Texto = strlen(strTexto);
+ 
+    // verificar se busca possui acento
+    for(i=0;i < Tam_Busca;i++){
+      if(strBusca[i] == -61){
+        Verificador_Acento = 1;
+        break;
+      }
+    }
+    //retirando -61 da busca e do texto para que o código realize a verificação corretamente.
+    // Retirar o byte -61 de strBusca
+    for(i = 0; strBusca[i] != '\0'; i++) {
+        if(strBusca[i] == -61) {
+            for(j = i; strBusca[j] != '\0'; j++) {
+                strBusca[j] = strBusca[j + 1];
+            }
+            i--; // Volta uma posição para reavaliar o próximo caractere
+        }
+    }
+  
+
+    // Retirar o byte -61 de strTexto
+    for(i = 0; strTexto[i] != '\0'; i++) {
+        if(strTexto[i] == -61) {
+            for(j = i; strTexto[j] != '\0'; j++) {
+                strTexto[j] = strTexto[j + 1];
+            }
+            i--;
+        }
+    }
+
+    Tam_Busca = strlen(strBusca);
+    Tam_Texto = strlen(strTexto);
+
+    // iniciando processo de comparação da busca com texto
+    j = 0;
+    k = 0;
+    for(i=0; i <= Tam_Texto - Tam_Busca;i++){
+        encontrou = 1;
+        posicao = i;
+        for(j = 0;j < Tam_Busca; j++){
+          if(strTexto[i+j]!=strBusca[j]){
+            encontrou = 0;
+            break;
+          }
+        }
+        if(encontrou == 1){
+          qtdOcorrencias++;
+          posicoes[k] = posicao + 1;
+          k++;
+          posicoes[k] = posicao + Tam_Busca;
+          k++;
+        }      
+    }
     return qtdOcorrencias;
+}
+
+void testQ4()
+{
+    char strTexto[250];
+    char strBusca[50];
+    int posicoes[30];
+    int i;
+    for (i = 0; i < 30; i++)
+    {
+        posicoes[i] = -1;
+    }
+    strcpy(strTexto, "Laboratorio de programacao: para ratos de programação");
+    strcpy(strBusca, "rato");
+    printf("%d\n", q4(strTexto, strBusca, posicoes) == 2);
+    printf("%d\n", posicoes[0] == 5);
+    printf("%d\n", posicoes[1] == 8);
+    printf("%d\n", posicoes[2] == 34);
+    printf("%d\n", posicoes[3] == 37);
+
+    for (i = 0; i < 30; i++)
+    {
+        posicoes[i] = -1;
+    }
+    strcpy(strTexto, "Olá, o mundo é muito grande. Tem muitas pessoas, e muitos problemas");
+    strcpy(strBusca, "mui");
+    printf("%d\n", q4(strTexto, strBusca, posicoes) == 3);
+    printf("%d\n", posicoes[0] == 16);
+    printf("%d\n", posicoes[1] == 18);
+    printf("%d\n", posicoes[2] == 34);
+    printf("%d\n", posicoes[3] == 36);
+    printf("%d\n", posicoes[4] == 52);
+    printf("%d\n", posicoes[5] == 54);
 }
 
 /*
@@ -595,6 +688,8 @@ printf("\n\nQUESTÃO 2:\n");
 calculaEImprimeDiferenca();
 printf("\nQUESTÃO 3:\n");
 testQ3();
+printf("\nQUESTÃO 4:\n");
+testQ4();
 printf("\nQUESTÃO 5:\n");
 testQ5();
 printf("\nQUESTÃO 6:\n");
