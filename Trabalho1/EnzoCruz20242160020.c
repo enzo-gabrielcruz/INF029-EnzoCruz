@@ -564,7 +564,7 @@ int q6(int numerobase, int numerobusca)
    numero_decrementado = numerobase;
     while (numero_decrementado != 0)
     {
-       if (multiplicador_numero == 0)
+      if (multiplicador_numero == 0)
             break;
       divisor = numero_decrementado/multiplicador_numero;
       numero_decrementado = numero_decrementado%multiplicador_numero;
