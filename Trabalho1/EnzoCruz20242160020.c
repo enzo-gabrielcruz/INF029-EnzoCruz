@@ -603,119 +603,102 @@ int q6(int numerobase, int numerobusca)
      Tam_Busca = strlen(palavra);
      contador = 0;
      k = 0;
-     hor_esquerda = 0;
+     int encontrou;
+     hor_esquerda;
      // verificando a partir da horizontal, iniciando da direita para esquerda da linha
      for (i=0;i < 8;i++){
       for(j = 9; j >= Tam_Busca - 1; j--){
-        if(palavra[k] == matriz[i][j]){
-          k++;
-          contador++;
-        }
-        else{
-         if (palavra[0] == matriz[i][j]) {
-          k = 1;
-          contador = 1;
-          } 
-          else {
-            k = 0;
-            contador = 0;
+        encontrou = 1;
+
+        for(k=0;k < Tam_Busca; k++){
+          if(matriz[i][j+k] != palavra[k]){
+            encontrou = 0;
+            break;
           }
         }
-       }
-       if(contador == Tam_Busca){
-        hor_esquerda = 1;
-        break;
-       }
-    k = 0;
-    contador = 0;
+        if(encontrou == 1){
+          hor_esquerda = 1;
+          break;
+        }
      }
+       if(hor_direita == 1) break;
+    }
   //-------------------------------------------------------------------------------------------------------   
      contador = 0;
      k = 0;
      hor_direita = 0;
      // verificando a partir da horizontal, iniciando da esquerda para direita da linha
-     for(i=0; i<8; i++){
-        for(j = 0; j <= 10 - Tam_Busca; j++){
-          if(palavra[k] == matriz[i][j]){
-            k++;
-            contador++;
-          }
-          else{
-            if (palavra[0] == matriz[i][j]) {
-              k = 1;
-              contador = 1;
-            } 
-              else {
-                k = 0;
-                contador = 0;
+     if(encontrou == 0){
+        for(i=0; i<8; i++){
+          for(j = 0; j <= 10 - Tam_Busca; j++){
+            encontrou = 1;
+         
+            for(k=0; k < Tam_Busca; k++){
+              if(matriz[i][j+k] != palavra[k]){
+                encontrou = 0;
+                break;
               }
-        }
-        }
-        if(contador == Tam_Busca){
-          hor_direita = 1;
-          break;          
-        }
-        k = 0;
-        contador = 0;
+            }
+            if(encontrou == 1){
+              hor_direita = 1;
+              break;
+            }
+          }
+              if(hor_direita == 1) break; 
+          }
      }
+     
+     
 //-------------------------------------------------------------------------------------------------------
      int vert_cima = 0;
      contador = 0;
      k = 0;
      // verificando a partir da vertical , iniciando de cima para baixo
-     for(j=0;j<10;j++){
-        for(i = 0; i <= 8 - Tam_Busca; i++){
-          if(palavra[k]==matriz[i][j]){
-            k++;
-            contador++;
-          }
-          else{
-            if (palavra[0] == matriz[i][j]) {
-              k = 1;
-              contador = 1;
-              } 
-              else {
-                k = 0;
-                contador = 0;
+     if(encontrou == 0){
+        for(j=0;j<10;j++){
+          for(i = 0; i <= 8 - Tam_Busca; i++){
+            encontrou = 1;
+
+              for(k=0; k < Tam_Busca; k++){
+                if(matriz[i][j+k] != palavra[k]){
+                  encontrou = 0;
+                  break;
+                }
               }
-          } 
-        }
-        if(contador == Tam_Busca){
-          vert_cima = 1;
-          break;
-        }
-        k = 0;
-        contador = 0;
-     }
+              if(encontrou == 1){
+                vert_cima = 1;
+                break;
+              }       
+      }
+      if(vert_cima == 1)break;
+    }
+  }
+     
 //-------------------------------------------------------------------------------------------------------
      int vert_baixo = 0;
      contador = 0;
      k = 0;
      // verificando a partir da vertical , iniciando de baixo para cima
-     for(j=0;j<10;j++){
-        for(i = 7; i >= Tam_Busca - 1; i--){
-          if(palavra[k]==matriz[i][j]){
-            k++;
-            contador++;
-          }
-          else{
-            if (palavra[0] == matriz[i][j]) {
-              k = 1;
-              contador = 1;
-              } 
-              else {
-                k = 0;
-                contador = 0;
-              }
-          } 
+     if(encontrou == 0)
+     {
+        for(j=0;j<10;j++){
+          for(i = 7; i >= Tam_Busca - 1; i--){
+            encontrou = 1;
+            for(k=0;k<Tam_Busca;k++){
+                if(matriz[i][j+k] != palavra[k]){
+                  encontrou = 0;
+                  break;
+                }
+            }
+            if(encontrou == 1){
+              vert_baixo = 1;
+              break;
+            }
         }
-        if(contador == Tam_Busca){
-          vert_baixo = 1;
-          break;
-        }
-        k = 0;
-        contador = 0;
+        if(vert_baixo == 1)break;
+      }
      }
+     
 //-------------------------------------------------------------------------------------------------------
      int diag_sup_esquerda = 0;
      contador = 0;
