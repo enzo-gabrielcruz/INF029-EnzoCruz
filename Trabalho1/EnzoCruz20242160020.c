@@ -593,12 +593,263 @@ int q6(int numerobase, int numerobusca)
     1 se achou 0 se não achou
  */
 
- int q7(char matriz[8][10], char palavra[5])
+ int q7(char matriz[8][10], char palavra[6])
  {
-     int achou;
-     return achou;
+     int achou,contador,hor_esquerda,hor_direita;
+     int Tam_Busca;
+     int i,j,k;
+    
+     achou = 0;
+     Tam_Busca = strlen(palavra);
+     contador = 0;
+     k = 0;
+     hor_esquerda = 0;
+     // verificando a partir da horizontal, iniciando da direita para esquerda da linha
+     for (i=0;i < 8;i++){
+      for(j = 9; j >= Tam_Busca - 1; j--){
+        if(palavra[k] == matriz[i][j]){
+          k++;
+          contador++;
+        }
+        else{
+         if (palavra[0] == matriz[i][j]) {
+          k = 1;
+          contador = 1;
+          } 
+          else {
+            k = 0;
+            contador = 0;
+          }
+        }
+       }
+       if(contador == Tam_Busca){
+        hor_esquerda = 1;
+        break;
+       }
+    k = 0;
+    contador = 0;
+     }
+  //-------------------------------------------------------------------------------------------------------   
+     contador = 0;
+     k = 0;
+     hor_direita = 0;
+     // verificando a partir da horizontal, iniciando da esquerda para direita da linha
+     for(i=0; i<8; i++){
+        for(j = 0; j <= 10 - Tam_Busca; j++){
+          if(palavra[k] == matriz[i][j]){
+            k++;
+            contador++;
+          }
+          else{
+            if (palavra[0] == matriz[i][j]) {
+              k = 1;
+              contador = 1;
+            } 
+              else {
+                k = 0;
+                contador = 0;
+              }
+        }
+        }
+        if(contador == Tam_Busca){
+          hor_direita = 1;
+          break;          
+        }
+        k = 0;
+        contador = 0;
+     }
+//-------------------------------------------------------------------------------------------------------
+     int vert_cima = 0;
+     contador = 0;
+     k = 0;
+     // verificando a partir da vertical , iniciando de cima para baixo
+     for(j=0;j<10;j++){
+        for(i = 0; i <= 8 - Tam_Busca; i++){
+          if(palavra[k]==matriz[i][j]){
+            k++;
+            contador++;
+          }
+          else{
+            if (palavra[0] == matriz[i][j]) {
+              k = 1;
+              contador = 1;
+              } 
+              else {
+                k = 0;
+                contador = 0;
+              }
+          } 
+        }
+        if(contador == Tam_Busca){
+          vert_cima = 1;
+          break;
+        }
+        k = 0;
+        contador = 0;
+     }
+//-------------------------------------------------------------------------------------------------------
+     int vert_baixo = 0;
+     contador = 0;
+     k = 0;
+     // verificando a partir da vertical , iniciando de baixo para cima
+     for(j=0;j<10;j++){
+        for(i = 7; i >= Tam_Busca - 1; i--){
+          if(palavra[k]==matriz[i][j]){
+            k++;
+            contador++;
+          }
+          else{
+            if (palavra[0] == matriz[i][j]) {
+              k = 1;
+              contador = 1;
+              } 
+              else {
+                k = 0;
+                contador = 0;
+              }
+          } 
+        }
+        if(contador == Tam_Busca){
+          vert_baixo = 1;
+          break;
+        }
+        k = 0;
+        contador = 0;
+     }
+//-------------------------------------------------------------------------------------------------------
+     int diag_sup_esquerda = 0;
+     contador = 0;
+     k = 0;
+    // verificando a partir da diagonal superior, da esquerda para direita
+    for(i=0;i<8;i++){
+      for(j=0;j<10;j++){
+        if(i!=j) continue;
+        if(palavra[k] == matriz[i][j]){
+          contador++;
+          k++;
+        }
+          else{
+            if (palavra[0] == matriz[i][j]) {
+              k = 1;
+              contador = 1;
+              } 
+              else {
+                k = 0;
+                contador = 0;
+              }
+          } 
+        }
+      if(contador == Tam_Busca){
+        diag_sup_esquerda = 1;
+        break;
+      }
+      k = 0;
+      contador = 0;
+    }
+  //-------------------------------------------------------------------------------------------------------
+    int diag_sup_direita = 0;
+    contador = 0;
+    k = 0;
+  // verificando a partir da diagonal superior, da direita para esquerda
+    for(i=0;i<8;i++){
+      for(j=9;j>=0;j--){
+          if(i!=j)continue;
 
- }
+          if(palavra[k]==matriz[i][j]){
+            k++;
+            contador++;
+          }
+          else{
+            if (palavra[0] == matriz[i][j]) {
+              k = 1;
+              contador = 1;
+              } 
+              else {
+                k = 0;
+                contador = 0;
+              }
+          } 
+      }
+      if(contador == Tam_Busca){
+        diag_sup_direita = 1;
+        break;
+      }
+      k = 0;
+      contador = 0;
+    }
+//-------------------------------------------------------------------------------------------------------
+   // verificando a partir da diagonal inferior, da esquerda para direita
+   int diag_inf_esquerda = 0;
+   contador = 0;
+   k = 0;
+   for(i=7;i>=0;i--){
+      for(j=0;j<10;j++){
+        if(i!=j) continue;
+
+        if(palavra[k]==matriz[i][j]){
+          k++;
+          contador++;
+        }
+        else{
+            if (palavra[0] == matriz[i][j]) {
+              k = 1;
+              contador = 1;
+              } 
+              else {
+                k = 0;
+                contador = 0;
+              }
+          } 
+      }
+      if(contador == Tam_Busca){
+        diag_inf_esquerda = 1;
+        break;
+      }
+      k = 0;
+      contador = 0;
+   }
+//-------------------------------------------------------------------------------------------------------
+   // verificando a partir da diagonal inferior, da direita para esquerda
+   int diag_inf_direita = 0;
+   k = 0;
+   contador = 0;
+   for(i=7;i>=0;i--){
+      for(j=9;j>=0;j--){
+        if(i!=j) continue;
+
+        if(palavra[k]==matriz[i][j]){
+          k++;
+          contador++;
+        }
+        else{
+            if (palavra[0] == matriz[i][j]) {
+              k = 1;
+              contador = 1;
+              } 
+              else {
+                k = 0;
+                contador = 0;
+              }
+          } 
+      }
+      if(contador == Tam_Busca){
+        diag_inf_direita = 1;
+        break;
+      }
+      k = 0;
+      contador = 0;
+   }
+
+   if(diag_inf_direita == 1 || diag_inf_esquerda == 1 || diag_sup_direita == 1 || diag_sup_esquerda == 1){
+    achou = 1;
+   }
+  if(hor_direita == 1 || hor_esquerda == 1 || vert_baixo == 1 || vert_cima == 1){
+    achou = 1;
+  }
+
+    return achou;
+}
+
 
 
 
@@ -685,6 +936,30 @@ void testQ6()
 }
 
 
+void testQ7()
+{
+    char matrix[8][10] = {
+        { 'Q', 'M', 'J', 'D', 'L', 'A', 'Z', 'F', 'C', 'R' },
+        { 'N', 'B', 'Y', 'G', 'P', 'S', 'K', 'H', 'E', 'X' },
+        { 'V', 'O', 'W', 'U', 'T', 'I', 'Z', 'A', 'L', 'C' },
+        { 'M', 'Q', 'B', 'D', 'N', 'F', 'R', 'J', 'G', 'E' },
+        { 'H', 'S', 'K', 'T', 'U', 'X', 'W', 'O', 'P', 'Y' },
+        { 'C', 'Z', 'A', 'I', 'L', 'M', 'V', 'G', 'N', 'B' },
+        { 'D', 'F', 'E', 'H', 'S', 'K', 'J', 'Q', 'R', 'T' },
+        { 'U', 'X', 'Y', 'W', 'V', 'O', 'P', 'N', 'M', 'L' }
+    };
+    char stringBusca [6] = { 'F', 'E', 'H', 'S', 'K'};
+    printf("%d\n", q7(matrix, stringBusca) == 1);
+    strcpy(stringBusca, "KJQRT");
+    printf("%d\n", q7(matrix, stringBusca) == 1);
+    strcpy(stringBusca, "AATOK");
+    printf("%d\n", q7(matrix, stringBusca) == 0);
+    strcpy(stringBusca, "LTBON");
+    printf("%d\n", q7(matrix, stringBusca) == 1);
+
+}
+
+
 int main(){
 printf("QUESTÃO 1:\n");
 testQ1();
@@ -698,6 +973,8 @@ printf("\nQUESTÃO 5:\n");
 testQ5();
 printf("\nQUESTÃO 6:\n");
 testQ6();
+printf("\nQUESTÃO 7:\n");
+testQ7();
 printf("\n");
 
 return 0;
