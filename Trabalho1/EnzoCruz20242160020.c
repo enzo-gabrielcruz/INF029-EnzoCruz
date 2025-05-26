@@ -561,14 +561,17 @@ int q6(int numerobase, int numerobusca)
     }
     multiplicador_numero = multiplicador_numero/multiplicador_busca;
 
-
-
    numero_decrementado = numerobase;
     while (numero_decrementado != 0)
     {
+       if (multiplicador_numero == 0)
+            break;
       divisor = numero_decrementado/multiplicador_numero;
       numero_decrementado = numero_decrementado%multiplicador_numero;
-      multiplicador_numero = multiplicador_numero/multiplicador_busca;
+       if (multiplicador_busca != 0)
+        multiplicador_numero = multiplicador_numero / multiplicador_busca;
+    else
+        break;
 
       if(divisor == numerobusca){
         qtdOcorrencias++;
@@ -594,6 +597,7 @@ int q6(int numerobase, int numerobusca)
  {
      int achou;
      return achou;
+
  }
 
 
@@ -694,6 +698,7 @@ printf("\nQUESTÃO 5:\n");
 testQ5();
 printf("\nQUESTÃO 6:\n");
 testQ6();
+printf("\n");
 
 return 0;
 
