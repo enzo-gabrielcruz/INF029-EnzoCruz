@@ -210,5 +210,6 @@ void testQ7()
     printf("%d\n", q7(matrix, stringBusca) == 0);
     strcpy(stringBusca, "LTBON");
     printf("%d\n", q7(matrix, stringBusca) == 1);
+    
 
 }
