@@ -12,7 +12,7 @@
 
 //  ----- Dados do Aluno -----
 //  Nome: ENZO GABRIEL CALADO DA CRUZ
-//  email:
+//  email: enzo.calado@outlook.com
 //  Matrícula: 20242160020
 //  Semestre: 2º
 
@@ -134,24 +134,8 @@ int q1(char data[])
 return 1;
 
 }
-void testQ1()
-{
-    char str[11];
-    strcpy(str, "29/02/2015");
-    printf("%d\n", q1(str) == 0);
-    strcpy(str, "29/02/2012");
-    printf("%d\n", q1(str) == 1);
-    strcpy(str, "9/13/2014");
-    printf("%d\n", q1(str) == 0);
-    strcpy(str, "45/4/2014");
-    printf("%d\n", q1(str) == 0);
-    strcpy(str, "/9/2014");
-    printf("%d\n", q1(str) == 0);
-    strcpy(str, "1a/9/2014");
-    printf("%d\n", q1(str) == 0);
-}
 
-
+//----------------------------------------------------------------------------------
 
 /*
  Q2 = diferença entre duas datas
@@ -206,7 +190,6 @@ DiasMesesAnos q2(char datainicial[], char datafinal[])
         return dma;
       }
 
-
     }
 
       //calcule a distancia entre as datas
@@ -233,33 +216,7 @@ DiasMesesAnos q2(char datainicial[], char datafinal[])
       
     }
 
-   void calculaEImprimeDiferenca() {
-    // Datas fixas
-    char datainicial[] = "12/11/2002";
-    char datafinal[] = "22/05/2025";
-
-    DiasMesesAnos resultado = q2(datainicial, datafinal);
-
-    switch (resultado.retorno) {
-        case 1:
-            printf("Diferença: %d ano(s), %d mes(es), %d dia(s)\n",
-                   resultado.qtdAnos, resultado.qtdMeses, resultado.qtdDias);
-            break;
-        case 2:
-            printf("Data inicial inválida.\n");
-            break;
-        case 3:
-            printf("Data final inválida.\n");
-            break;
-        case 4:
-            printf("Data final é menor que a data inicial.\n");
-            break;
-        default:
-            printf("Erro desconhecido ao calcular diferença entre as datas.\n");
-            break;
-    }
-}
-    
+//----------------------------------------------------------------------------------
 
 /*
  Q3 = encontrar caracter em texto
@@ -318,19 +275,21 @@ int q3(char *texto, char c, int isCaseSensitive)
     }
     //retirando a posicao -61, referente ao identificador da vogal com acento
     char aux;
-    for(i=0; texto[i] != '\0';i++){
-      if(texto[i] == -61){
-        for(int j = i; texto[j] != '\0';j++){
-          aux = texto[j];
-          texto[j] = texto[j+1];
+   
+    for(i = 0; texto[i] != '\0'; i++) {
+    if(texto[i] == -61) { 
+        // Shift para a esquerda (removendo texto[i])
+        for(j = i; texto[j] != '\0'; j++) {
+            texto[j] = texto[j + 1];
         }
-        texto[j-1] = '\0';
-      }
+        i--; // volta uma posição para não pular o próximo caractere
     }
+}
 
 
     // definindo que se não for case sensitive o programa irá colocar todos os caracteres para maiúsculo
-    if(isCaseSensitive != 1){
+    if(isCaseSensitive == 0){
+      if(c >= 97 && c <= 122) c = c - 32;
       for(i = 0; texto[i] != '\0'; i++)
       {
         if(texto[i] >= 97 && texto[i] <= 122)
@@ -345,7 +304,6 @@ int q3(char *texto, char c, int isCaseSensitive)
         }
       }
     }
-
     else{
       for(i=0; texto[i]!= '\0';i++){
         if (texto[i]== c){
@@ -355,19 +313,6 @@ int q3(char *texto, char c, int isCaseSensitive)
     }
     return qtdOcorrencias;
 }
-
-void testQ3()
-{
-    char str[250];
-    strcpy(str, "Renato Lima Novais");
-    printf("%d\n", q3(str, 'a', 0) == 3);
-    printf("%d\n", q3(str, 'b', 0) == 0);
-    printf("%d\n", q3(str, 'l', 1) == 0);
-    printf("%d\n", q3(str, 'l', 0) == 1);
-    printf("%d\n", q3(str, 'L', 0) == 1);
-}
-
-
 
 /*
  Q4 = encontrar palavra em texto
@@ -451,39 +396,7 @@ int q4(char *strTexto, char *strBusca, int posicoes[30])
     return qtdOcorrencias;
 }
 
-void testQ4()
-{
-    char strTexto[250];
-    char strBusca[50];
-    int posicoes[30];
-    int i;
-    for (i = 0; i < 30; i++)
-    {
-        posicoes[i] = -1;
-    }
-    strcpy(strTexto, "Laboratorio de programacao: para ratos de programação");
-    strcpy(strBusca, "rato");
-    printf("%d\n", q4(strTexto, strBusca, posicoes) == 2);
-    printf("%d\n", posicoes[0] == 5);
-    printf("%d\n", posicoes[1] == 8);
-    printf("%d\n", posicoes[2] == 34);
-    printf("%d\n", posicoes[3] == 37);
-
-    for (i = 0; i < 30; i++)
-    {
-        posicoes[i] = -1;
-    }
-    strcpy(strTexto, "Olá, o mundo é muito grande. Tem muitas pessoas, e muitos problemas");
-    strcpy(strBusca, "mui");
-    printf("%d\n", q4(strTexto, strBusca, posicoes) == 3);
-    printf("%d\n", posicoes[0] == 16);
-    printf("%d\n", posicoes[1] == 18);
-    printf("%d\n", posicoes[2] == 34);
-    printf("%d\n", posicoes[3] == 36);
-    printf("%d\n", posicoes[4] == 52);
-    printf("%d\n", posicoes[5] == 54);
-}
-
+//----------------------------------------------------------------------------------
 /*
  Q5 = inverte número
  @objetivo
@@ -521,16 +434,7 @@ int q5(int num)
 
     return total;
 }
-
-void testQ5()
-{
-    printf("%d\n", q5(345) == 543);
-    printf("%d\n", q5(78) == 87);
-    printf("%d\n", q5(3) == 3);
-    printf("%d\n", q5(5430) == 345);
-}
-
-
+//----------------------------------------------------------------------------------
 /*
  Q6 = ocorrência de um número em outro
  @objetivo
@@ -586,7 +490,7 @@ int q6(int numerobase, int numerobusca)
     // voce vai verificar o numero que voce quer verificar a repetição. A partir dai voce precisa identificar se o numero é unidade, dezena, centena, etc. e a partir dai começar a quebra do mumero principal dividindo o numero pelo vaor unitário do numero que voce quer verificar repetição, e pegar o percent da divisão
 
 }
-
+//----------------------------------------------------------------------------------
 
 /*
  Q7 = jogo busca palavras
@@ -696,8 +600,7 @@ int q6(int numerobase, int numerobusca)
     return 0;
 }
 
-
-
+//----------------------------------------------------------------------------------
 
 DataQuebrada quebraData(char data[]){
   DataQuebrada dq;
@@ -772,67 +675,7 @@ DataQuebrada quebraData(char data[]){
   return dq;
 }
 
+//----------------------------------------------------------------------------------
 
-void testQ6()
-{
-    printf("%d\n", q6(34567368, 3) == 2);
-    printf("%d\n", q6(34567368, 4576) == 0);
-    printf("%d\n", q6(3539343, 3) == 4);
-    printf("%d\n", q6(3539343, 39) == 1);
-}
-
-
-void testQ7()
-{
-    char matrix[8][10] = {
-        { 'Q', 'M', 'J', 'D', 'L', 'A', 'Z', 'F', 'C', 'R' },
-        { 'N', 'B', 'Y', 'G', 'P', 'S', 'K', 'H', 'E', 'X' },
-        { 'V', 'O', 'W', 'U', 'T', 'I', 'Z', 'A', 'L', 'C' },
-        { 'M', 'Q', 'B', 'D', 'N', 'F', 'R', 'J', 'G', 'E' },
-        { 'H', 'S', 'K', 'T', 'U', 'X', 'W', 'O', 'P', 'Y' },
-        { 'C', 'Z', 'A', 'I', 'L', 'M', 'V', 'G', 'N', 'B' },
-        { 'D', 'F', 'E', 'H', 'S', 'K', 'J', 'Q', 'R', 'T' },
-        { 'U', 'X', 'Y', 'W', 'V', 'O', 'P', 'N', 'M', 'L' }
-    };
-    char stringBusca [6] = { 'F', 'E', 'H', 'S', 'K'};
-    printf("%d\n", q7(matrix, stringBusca) == 1);
-    strcpy(stringBusca, "KJQRT");
-    printf("%d\n", q7(matrix, stringBusca) == 1);
-    strcpy(stringBusca, "AATOK");
-    printf("%d\n", q7(matrix, stringBusca) == 0);
-    strcpy(stringBusca, "LTBON");
-    printf("%d\n", q7(matrix, stringBusca) == 1);
-    strcpy(stringBusca, "JGARE");
-    printf("%d\n", q7(matrix, stringBusca) == 0);
-    strcpy(stringBusca, "REARX");
-    printf("%d\n", q7(matrix, stringBusca) == 1);
-    strcpy(stringBusca, "KDTSX");
-    printf("%d\n", q7(matrix, stringBusca) == 0);
-    strcpy(stringBusca, "TBON");
-    printf("%d\n", q7(matrix, stringBusca) == 1);
-
-}
-
-
-int main(){
-printf("QUESTÃO 1:\n");
-testQ1();
-printf("\n\nQUESTÃO 2:\n");
-calculaEImprimeDiferenca();
-printf("\nQUESTÃO 3:\n");
-testQ3();
-printf("\nQUESTÃO 4:\n");
-testQ4();
-printf("\nQUESTÃO 5:\n");
-testQ5();
-printf("\nQUESTÃO 6:\n");
-testQ6();
-printf("\nQUESTÃO 7:\n");
-testQ7();
-printf("\n");
-
-return 0;
-
-}
 
 

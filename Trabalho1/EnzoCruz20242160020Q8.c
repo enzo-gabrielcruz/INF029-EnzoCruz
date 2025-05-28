@@ -97,14 +97,20 @@ while(validarVencedor(tabuleiro) == 0 && jogadas <= 9){
     tabuleiro[lin][col] = 'X';
     jogadas++;
 
+    TabuleiroPrinter(tabuleiro);
+    validador_coluna = 0;
+    validador_linha = 0;
+
     if(validarVencedor(tabuleiro)==1){
         printf("Jogador 1 VENCEDOR!!!\n\n");
         break;
     }
 
-    TabuleiroPrinter(tabuleiro);
-    validador_coluna = 0;
-    validador_linha = 0;
+    if(validarVencedor(tabuleiro)==3){
+        break;
+    }
+
+    
 
     printf("Jogador 2,informe sua jogada: ");
     while(validador_linha == 0 && validador_coluna == 0){
@@ -136,6 +142,11 @@ while(validarVencedor(tabuleiro) == 0 && jogadas <= 9){
         printf("Jogador 2 VENCEDOR!!!\n\n");
         break;
     }
+    
+    if(validarVencedor(tabuleiro)==3){
+        break;
+    }
+
 }
 
    if(validarVencedor(tabuleiro)==3){
