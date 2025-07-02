@@ -363,11 +363,37 @@ Retorno (No*)
     NULL, caso não tenha nenhum número nas listas
     No*, ponteiro para o início da lista com cabeçote
 */
-No *montarListaEncadeadaComCabecote()
-{
+No *montarListaEncadeadaComCabecote(Lista *Lista) {
+    int i, j;
+    Lista->inicio = NULL;
+    No *ultimo = NULL;
 
-    return NULL;
+    int temElemento = 0;
+
+    for (i = 0; i < TAM; i++) {
+        for (j = 0; j < vetorPrincipal[i].tamanhoDinamico; j++) {
+            No *novo = malloc(sizeof(No));
+            novo->conteudo = vetorPrincipal[i].vetorDinamico[j];
+            novo->prox = NULL;
+
+            if (Lista->inicio == NULL) {
+                Lista->inicio = novo;
+            } else {
+                ultimo->prox = novo;
+            }
+
+            ultimo = novo;
+            temElemento = 1;
+        }
+    }
+
+    if (!temElemento) {
+        return NULL;
+    }
+
+    return Lista->inicio;
 }
+
 
 /*
 Objetivo: retorna os números da lista enceada com cabeçote armazenando em vetorAux.
@@ -375,6 +401,12 @@ Retorno void
 */
 void getDadosListaEncadeadaComCabecote(No *inicio, int vetorAux[])
 {
+    int i = 0;
+    while (inicio!=NULL){
+       vetorAux[i] = inicio->conteudo;
+        i++;
+        inicio = inicio->prox;
+    }
 }
 
 /*
@@ -386,6 +418,16 @@ Retorno
 */
 void destruirListaEncadeadaComCabecote(No **inicio)
 {
+    No *atual = *inicio;
+    No *proximo;
+
+    while (atual != NULL){
+        proximo = atual->prox;
+        free(atual);
+        atual = proximo;
+    }
+
+    *inicio = NULL;
 }
 
 /*
@@ -395,6 +437,12 @@ Objetivo: inicializa o programa. deve ser chamado ao inicio do programa
 
 void inicializar()
 {
+    int i;
+    for (i=0 ; i < TAM;i++){
+        vetorPrincipal[i].vetorDinamico = NULL;   
+        vetorPrincipal[i].tamanhoDinamico = 0;
+        vetorPrincipal[i].capacidade = 0;   
+    }   
 }
 
 /*
@@ -405,5 +453,14 @@ para poder liberar todos os espaços de memória das estruturas auxiliares.
 
 void finalizar()
 {
-
+    int i;
+    for (i=0 ; i < TAM;i++){
+        if (vetorPrincipal[i].vetorDinamico != NULL){
+             free(vetorPrincipal[i].vetorDinamico);
+             vetorPrincipal[i].vetorDinamico = NULL;
+        }   
+        vetorPrincipal[i].tamanhoDinamico = 0;
+        vetorPrincipal[i].capacidade = 0;   
+    }
 }
+
