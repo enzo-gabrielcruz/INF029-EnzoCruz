@@ -441,7 +441,8 @@ void inicializar()
     for (i=0 ; i < TAM;i++){
         vetorPrincipal[i].vetorDinamico = NULL;   
         vetorPrincipal[i].tamanhoDinamico = 0;
-        vetorPrincipal[i].capacidade = 0;   
+        vetorPrincipal[i].capacidade = 0; 
+        Lista * inicio = NULL;
     }   
 }
 
@@ -454,6 +455,7 @@ para poder liberar todos os espaços de memória das estruturas auxiliares.
 void finalizar()
 {
     int i;
+    No * inicio;
     for (i=0 ; i < TAM;i++){
         if (vetorPrincipal[i].vetorDinamico != NULL){
              free(vetorPrincipal[i].vetorDinamico);
